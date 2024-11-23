@@ -7,7 +7,7 @@ run:
 hot:
 	@echo " >> Installing gin if not installed"
 	@go install github.com/codegangsta/gin@latest
-	@gin -i -p 9003 -a 9091 serve-http
+	@gin -i -p 9004 -a 9092 serve-http
 
 goose-create:
 # example : make goose-create name=create_users_table

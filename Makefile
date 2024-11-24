@@ -23,19 +23,19 @@ goose-up:
 # example : make goose-up
 	@echo " >> Installing goose if not installed"
 	@go install github.com/pressly/goose/v3/cmd/goose@latest
-	@goose -dir scripts/migrations/sql postgres "host=localhost user=postgres password=21012123op dbname=library_category sslmode=disable" up
+	@goose -dir scripts/migrations/sql postgres "host=localhost user=postgres password=21012123op dbname=library_author sslmode=disable" up
 
 goose-down:
 # example : make goose-down
 	@echo " >> Installing goose if not installed"
 	@go install github.com/pressly/goose/v3/cmd/goose@latest
-	@goose -dir scripts/migrations/sql postgres "host=localhost user=postgres password=21012123op dbname=library_category sslmode=disable" down
+	@goose -dir scripts/migrations/sql postgres "host=localhost user=postgres password=21012123op dbname=library_author sslmode=disable" down
 
 goose-status:
 # example : make goose-status
 	@echo " >> Installing goose if not installed"
 	@go install github.com/pressly/goose/v3/cmd/goose@latest
-	@goose -dir scripts/migrations/sql postgres "host=localhost user=postgres password=21012123op dbname=library_category sslmode=disable" status
+	@goose -dir scripts/migrations/sql postgres "host=localhost user=postgres password=21012123op dbname=library_author sslmode=disable" status
 
 PROTO_SRC_DIR := ./external/proto/tokenvalidation
 PROTO_OUT_DIR := ./external/proto/tokenvalidation

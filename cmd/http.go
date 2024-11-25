@@ -54,6 +54,7 @@ func dependencyInject() Dependency {
 	authorRepo := &authorRepository.AuthorRepository{
 		DB:     helpers.DB,
 		Logger: helpers.Logger,
+		Redis:  helpers.RedisClient,
 	}
 
 	validator := validator.NewValidator()

@@ -37,21 +37,10 @@ func (r *AuthorRepository) InsertNewAuthor(ctx context.Context, author *models.A
 
 func (r *AuthorRepository) FindAuthorByID(ctx context.Context, id string) (*models.Author, error) {
 	var (
-		res      = new(models.Author)
-		cacheKey = fmt.Sprintf("author:%s", id)
+		res = new(models.Author)
 	)
 
-	cachedData, err := r.Redis.Get(ctx, cacheKey).Result()
-	if err == nil {
-		err = json.Unmarshal([]byte(cachedData), res)
-		if err == nil {
-			r.Logger.Info("category::FindAuthorByID - Data retrieved from cache")
-			return res, nil
-		}
-		r.Logger.Warn("category::FindAuthorByID - Failed to unmarshal cache data: ", err)
-	}
-
-	err = r.DB.GetContext(ctx, res, r.DB.Rebind(queryFindAuthorByID), id)
+	err := r.DB.GetContext(ctx, res, r.DB.Rebind(queryFindAuthorByID), id)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			r.Logger.Error("author::FindAuthorByID - author doesnt exist")
@@ -60,16 +49,6 @@ func (r *AuthorRepository) FindAuthorByID(ctx context.Context, id string) (*mode
 
 		r.Logger.Error("author::FindAuthorByID - failed to find author by id: ", err)
 		return nil, err
-	}
-
-	dataToCache, err := json.Marshal(res)
-	if err != nil {
-		r.Logger.Warn("category::FindAuthorByID - Failed to marshal data for caching: ", err)
-	} else {
-		err = r.Redis.Set(ctx, cacheKey, dataToCache, 5*time.Minute).Err()
-		if err != nil {
-			r.Logger.Warn("category::FindAuthorByID - Failed to cache data: ", err)
-		}
 	}
 
 	return res, nil

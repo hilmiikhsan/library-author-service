@@ -37,13 +37,25 @@ goose-status:
 	@go install github.com/pressly/goose/v3/cmd/goose@latest
 	@goose -dir scripts/migrations/sql postgres "host=localhost user=postgres password=21012123op dbname=library_author sslmode=disable" status
 
-PROTO_SRC_DIR := ./external/proto/tokenvalidation
-PROTO_OUT_DIR := ./external/proto/tokenvalidation
-PROTO_FILE := token_validation.proto
+PROTO_SRC_DIR_EXTERNAL := ./external/proto/tokenvalidation
+PROTO_OUT_DIR_EXTERNAL := ./external/proto/tokenvalidation
+PROTO_FILE_EXTERNAL := token_validation.proto
 
-generate-proto:
-	protoc --proto_path=$(PROTO_SRC_DIR) \
-		--go_out=$(PROTO_OUT_DIR) --go-grpc_out=$(PROTO_OUT_DIR) \
+generate-proto-external:
+	protoc --proto_path=$(PROTO_SRC_DIR_EXTERNAL) \
+		--go_out=$(PROTO_OUT_DIR_EXTERNAL) --go-grpc_out=$(PROTO_OUT_DIR_EXTERNAL) \
 		--go_opt=paths=source_relative \
 		--go-grpc_opt=paths=source_relative \
-		$(PROTO_SRC_DIR)/$(PROTO_FILE)
+		$(PROTO_SRC_DIR_EXTERNAL)/$(PROTO_FILE_EXTERNAL)
+
+PROTO_SRC_DIR_INTERNAL := ./cmd/proto/author
+PROTO_OUT_DIR_INTERNAL := ./cmd/proto/author
+PROTO_FILE_INTERNAL := author.proto
+
+generate-proto-internal:
+	protoc --proto_path=$(PROTO_SRC_DIR_INTERNAL) \
+		--go_out=$(PROTO_OUT_DIR_INTERNAL) --go-grpc_out=$(PROTO_OUT_DIR_INTERNAL) \
+		--go_opt=paths=source_relative \
+		--go-grpc_opt=paths=source_relative \
+		$(PROTO_SRC_DIR_INTERNAL)/$(PROTO_FILE_INTERNAL)
+

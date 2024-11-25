@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/gin-gonic/gin"
+	"github.com/hilmiikhsan/library-author-service/cmd/proto/author"
 	"github.com/hilmiikhsan/library-author-service/internal/dto"
 	"github.com/hilmiikhsan/library-author-service/internal/models"
 )
@@ -30,4 +31,8 @@ type IAuthorHandler interface {
 	GetListAuthor(*gin.Context)
 	UpdateAuthor(*gin.Context)
 	DeleteAuthor(*gin.Context)
+}
+
+type IAuthorAPI interface {
+	GetDetailAuthor(ctx context.Context, req *author.AuthorRequest) (*author.AuthorResponse, error)
 }

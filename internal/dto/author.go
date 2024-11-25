@@ -14,6 +14,10 @@ type UpdateAuthorRequest struct {
 	DeathDate string `json:"death_date"`
 }
 
+type GetDetailAuthorRequest struct {
+	ID string `json:"id" validate:"required"`
+}
+
 type GetDetailAuthorResponse struct {
 	ID        string `json:"id"`
 	Name      string `json:"name"`
